@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+
+  website:
+    image: test-custom-ubuntu-php
+    # image: ubuntu:16.04
+    container_name: web-container
+    # build:
+    #   context: ./website
+    #   dockerfile: Dockerfile
+    volumes:
+      - ./website:/var/www/html
+    ports:
+      - 59009:80
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres-container
+    restart: always
+    environment:
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=devpass
+      - POSTGRES_DB=devTestDB
+    ports:
+      - 59099:3306
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+    volumes:
+       - /root/.pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  
