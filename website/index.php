@@ -1,7 +1,17 @@
 <?php 
-require_once 'database/dbFunctions.php';
+// require_once 'database/dbFunctions.php';
 
-$data = getDbData();
+// $data = getDbData();
+
+$conn = pg_connect("host=postgres port=5432 dbname=devTestDB user=devuser password=devpass");
+// $conn = pg_connect("host=localhost port=5432 dbname=devTestDB user=devuser password=devpass");
+echo 'checking db conncetion....';
+var_dump($conn);
+$result = pg_query($conn, "SELECT * FROM employee");
+var_dump($result);
+$data = pg_fetch_all($result);
+
+var_dump($data);
 
 ?>
 

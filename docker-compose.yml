@@ -21,24 +21,25 @@ services:
     container_name: postgres-container
     restart: always
     environment:
-      - POSTGRES_USER=devuser
-      - POSTGRES_PASSWORD=devpass
-      - POSTGRES_DB=devTestDB
+      POSTGRES_USER: devuser
+      POSTGRES_PASSWORD: devpass
+      POSTGRES_DB: devTestDB
     ports:
       - 59099:3306
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: pgadmin_container
+    container_name: pgadmin-container
+    restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
     volumes:
        - /root/.pgadmin
     ports:
-      - "${PGADMIN_PORT:-5050}:80"
+      - 5050:80
     depends_on:
       - postgres
-    restart: unless-stopped
+    
 
   
