@@ -15,29 +15,56 @@ services:
       - 59009:80
     depends_on:
       - postgres
-
+  
   postgres:
     image: postgres:latest
     container_name: postgres-container
     restart: always
     environment:
-      POSTGRES_USER: devuser
-      POSTGRES_PASSWORD: devpass
-      POSTGRES_DB: devTestDB
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=devpass
+      - POSTGRES_DB=devTestDB
+      - POSTGRES_HOST_AUTH_METHOD=trust
     ports:
-      - 59099:3306
+      - 55432:5432
+
+  # pgadmin:
+  #   image: fenglc/pgadmin4
+  #   # image: dpage/pgadmin4
+  #   container_name: pgadmin-container
+  #   restart: always
+  #   environment:
+  #   #   # PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+  #   #   # PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+  #     - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+  #     - PGADMIN_DEFAULT_PASSWORD=admin
+  #     # - PGADMIN_LISTEN_ADDRESS=127.0.0.1
+  #     # - DEFAULT_EMAIL=pgadmin4@pgadmin.org
+  #     # - DEFAULT_PASSWORD=admin
+  #   volumes:
+  #      - /root/.pgadmin
+  #   ports:
+  #     - 5050:5050
+  #   depends_on:
+  #     - postgres
+  
+
 
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin-container
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
-      PGADMIN_DEFAULT_PASSWORD: admin
+      # PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      # PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_LISTEN_ADDRESS=127.0.0.1
+      - PGADMIN_LISTEN_PORT=5050
     volumes:
        - /root/.pgadmin
     ports:
-      - 5050:80
+      - 5050:5050
     depends_on:
       - postgres
     
