@@ -1,3 +1,4 @@
+
 <?php 
 // require_once 'database/dbFunctions.php';
 
@@ -32,11 +33,11 @@ var_dump($data);
 
     <?php
 
-    foreach ($data as $d)
-    {
-        echo "ID: ". $d['id'] ."<br>";
-        echo "First Name: ". $d['firstname'] ."<br>";
-    }
+    // foreach ($data as $d)
+    // {
+    //     echo "ID: ". $d['id'] ."<br>";
+    //     echo "First Name: ". $d['firstname'] ."<br>";
+    // }
     
     ?>
     

@@ -5,21 +5,17 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update 
 
 # Install apache, PHP
-# RUN apt-get -y install apache2 curl php7.2 libapache2-mod-php7.2
+RUN apt-get -y install apache2 curl php7.2 libapache2-mod-php7.2
 
 
-#php not installed, no problem on apache
-RUN apt-get -y install apache2 
-RUN apt-get -y install curl  
-RUN apt-get -y install php7.2 
-RUN apt-get -y install libapache2-mod-php7.2
-
-# RUN apt-get -y install php
+# RUN apt-get -y install apache2 
+# RUN apt-get -y install curl  
+# RUN apt-get -y install php7.2 
+# RUN apt-get -y install libapache2-mod-php7.2
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 RUN rm -f  /var/www/html/index.html
-COPY . /var/www/html/
-RUN chmod 777 /var/www
+COPY . /var/www/html
 
 ADD stopapache.sh /
 RUN chmod +x /stopapache.sh
@@ -52,4 +48,3 @@ RUN chmod +x /stopapache.sh
 EXPOSE 80 
 
 ENTRYPOINT ["/stopapache.sh"]
-# ENTRYPOINT ["tail", "-f", "/dev/null"]
